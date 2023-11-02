@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class PhoneBook {
+    public static void main(String[] args) {
+        HashMap<String, HashSet<String>> phoneBook = new HashMap<>();
+        // Добавление данных в телефонную книгу
+        addContact(phoneBook, "Иванов", "111-111-1111");
+        addContact(phoneBook, "Иванов", "222-222-2222");
+        addContact(phoneBook, "Петров", "333-333-3333");
+        addContact(phoneBook, "Сидоров", "444-444-4444");
+        addContact(phoneBook, "Петров", "555-555-5555");
+
+        // Вывод телефонной книги
+        printPhoneBook(phoneBook);
+    }
+
+    // Добавление контакта в телефонную книгу
+    public static void addContact(HashMap<String, HashSet<String>> phoneBook, String name, String phoneNumber) {
+        if (!phoneBook.containsKey(name)) {
+            phoneBook.put(name, new HashSet<>());
+        }
+        phoneBook.get(name).add(phoneNumber);
+    }
+
+    // Вывод телефонной книги
+    public static void printPhoneBook(HashMap<String, HashSet<String>> phoneBook) {
+        // Создание списка из элементов Map
+        List<Map.Entry<String, HashSet<String>>> list = new LinkedList<>(phoneBook.entrySet());
+
+        // Сортировка списка по убыванию числа телефонов
+        list.sort((o1, o2) -> o2.getValue().size() - o1.getValue().size());
+
+        // Вывод телефонной книги
+        for (Map.Entry<String, HashSet<String>> entry : list) {
+            System.out.println("Имя: " + entry.getKey() + ", Телефоны: " + entry.getValue());
+        }
+    }
+}
